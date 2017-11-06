@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">Novasa Test</a>
+    </nav>
+
+    <div class="container">
+        {% for message in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">{{ message|trans }}</div>
+        {% endfor %}
+
+        {% for message in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ message|trans }}</div>
+        {% endfor %}
+        <div class="starter-template">
+            <p> List id: {{ id }}, name: {{ name }} </p>
+            <div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Product id</th>
+                        <th>Product Name</th>
+                        <th>Action</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {% for product in products %}
+                        <tr>
+                            <th>{{ product.id }}</th>
+                            <td>{{ product.name }}</td>
+                            <td><a class="btn btn-warning" href="{{ app.request.getBaseURL() }}/delete?id={{ product.id }}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+
+                    <tr>
+                        <form method="post" action="{{ app.request.getBaseURL() }}/add">
+                            <th></th>
+                            <td><input name="productName" type="text" placeholder="Product name"></td>
+                            <td><input class="btn" type="submit" value="Add"></td>
+                        </form>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
